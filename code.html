@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<style>
+    body {
+        background-color: black;
+        color: bisque;
+        font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+        text-align: center;
+    }
+
+    #result {
+        color: aliceblue;
+        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    }
+
+    #pass {
+        border: 2px solid blue;
+        background: linear-gradient(to right, rgb(85, 10, 146), rgb(5, 2, 182), rgb(0, 255, 247));
+        color: rgb(255, 255, 255);
+        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    }
+
+    button {
+        background: linear-gradient(to right, rgb(8, 62, 65), rgb(0, 202, 51), rgb(85, 255, 0));
+        border: 2px solid limegreen;
+        color: rgb(255, 255, 255);
+        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    }
+</style>
+
+<body>
+    <h2>Password Strength Checker</h2>
+    <input type="password" id="pass" placeholder="Enter Your Password">
+    <button onclick="buttonC()">Check Strength</button>
+    <p id="result" />
+    <script>
+        function evaluator(password) {
+            let rating = 0;
+
+            let passwordSize = password.length >= 8;
+            let hasUpperC = /[A-Z]/.test(password);
+            let hasLowerC = /[a-z]/.test(password);
+            let hasNumbers = /[0-9]/.test(password);
+            let hasSymbols = /[^A-Za-z0-9]/.test(password);
+
+            if (passwordSize) {
+                rating++;
+            }
+            if (hasUpperC) {
+                rating++;
+            }
+            if (hasLowerC) {
+                rating++;
+            }
+            if (hasNumbers) {
+                rating++;
+            }
+            if (hasSymbols) {
+                rating++;
+            }
+
+            switch (rating) {
+                case 5:
+                    return "Very Strong";
+                case 4:
+                    return "Strong";
+                case 3:
+                    return "Moderate";
+                case 2:
+                    return "Weak";
+                case 1:
+                    return "Very Weak";
+                default:
+                    return "Hackers Will Attack You Very Soon";
+            }
+        }
+
+        function buttonC() {
+            let password = document.getElementById("pass").value;
+            let result = evaluator(password);
+
+            let resultElement = document.getElementById("result");
+            resultElement.textContent = `Password Rating : ${result}`;
+
+            // Change color based on rating
+            switch (result) {
+                case "Very Strong":
+                    resultElement.style.background = "linear-gradient(to right, #0f0, #0c0)";
+                    resultElement.style.borderColor = "limegreen";
+                    break;
+                case "Strong":
+                    resultElement.style.background = "linear-gradient(to right, #4CAF50, #2E7D32)";
+                    resultElement.style.borderColor = "green";
+                    break;
+                case "Moderate":
+                    resultElement.style.background = "linear-gradient(to right, #FFD700, #FFB300)";
+                    resultElement.style.borderColor = "orange";
+                    break;
+                case "Weak":
+                    resultElement.style.background = "linear-gradient(to right, #f44336, #b71c1c)";
+                    resultElement.style.borderColor = "red";
+                    break;
+                case "Very Weak":
+                case "Hackers Will Attack You Very Soon":
+                    resultElement.style.background = "linear-gradient(to right, #8B0000, #B22222)";
+                    resultElement.style.borderColor = "darkred";
+                    break;
+            }
+        }
+
+    </script>
+</body>
+
+</html>
