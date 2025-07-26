@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://fonts.googleapis.com/css2?family=Goldman&family=Orbitron&family=Pacifico&family=Silkscreen&display=swap" rel="stylesheet">
+    <style>
+        body{
+            background-image: url('sample_image.png');
+            background-size: cover;
+        }
+        .container{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-top: 220px;
+        }
+        .btn{
+            cursor: pointer;
+            font-family: orbitron;
+            color: rgb(227, 213, 18);
+            background-color: black;
+            border: 2px solid gold;
+        }
+        .btn:hover{
+            transform: scale(1.1);
+            transition: transform 0.5s ease;
+            background: linear-gradient(45deg, black, rgb(175, 4, 4), rgb(255, 0, 0));
+            color: antiquewhite;
+            border: 2px solid red;
+        }
+        .h{
+            font-family: goldman;
+            color: beige;
+        }
+        .a{
+            font-size: medium;
+            font-family: silkscreen;
+            color : gold;
+            background-color: black;
+            border: 2px solid gold;
+        }
+        .c{
+            font-size: small;
+            font-family: orbitron;
+            color: bisque;
+        }
+        .q{
+            font-family: pacifico;
+            color: aliceblue;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="h">Random Quote Generator</h1>
+        <button class="btn" onclick="quoteG()">Get a Random Quote</button>
+        <h3 class="q">The quotes will appear here!</h3>
+        <h2 class="a">The author name will appear here</h2>
+        <h1 class="c">The quote category will appear here</h1>
+    </div>
+    <script>
+        const quoteG=async()=>{
+            try{
+                 const response = await fetch('https://api.api-ninjas.com/v1/quotes', {
+                    method: 'GET',
+                    headers: {
+                        'X-Api-Key': '5u8F2BEAZVSfs/Eoiaj6bA==9htneRAEDknYStcz'
+                    }
+                });
+                const json=await response.json();
+                document.querySelector(".q").textContent=json[0].quote;
+                document.querySelector(".a").textContent=json[0].author;
+                document.querySelector(".c").textContent=json[0].category;
+                const author=document.querySelector(".a");
+                author.style.color="red";
+                author.style.border = "2px solid red";
+            }
+            catch(error){
+                document.querySelector(".q").textContent="Failed to get a quote. Try again!";
+            }
+        }
+    </script>
+</body>
+</html>
